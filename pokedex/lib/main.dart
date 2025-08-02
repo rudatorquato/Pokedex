@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pokedex/di/service_locator.dart';
-import 'package:pokedex/features/pokemons/repository/pokemon_repository.dart';
+import 'package:pokedex/features/home/page/home_page.dart';
 import 'package:pokedex/features/pokemons/store/pokemon.store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 Future<void> main() async {
@@ -20,11 +20,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage()
+      // MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
