@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   children: [
     Container(
       decoration: BoxDecoration(
-        color: docAvatar,
+        color: background,
       ),
       height: MediaQuery.of(context).size.height,
     ),
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {},
                     text: 'Pokedex',
                     textColor: Colors.black,
-                    backgroundColor: Colors.greenAccent,
+                    backgroundColor: Colors.green,
                   ),
                   MyButtonWidget(
                     onTap: () {},
