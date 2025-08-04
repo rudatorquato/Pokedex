@@ -36,15 +36,22 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Padding(
-              padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.150, bottom: 120),
-              child: Text("Que Pokémon você está procurando?"),
-            ),
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height*0.150, 
+                bottom: 100,
+                ),
+                
+              ),
+           
             Padding(
               padding: EdgeInsets.only( left: 35, right: 35),
               child: SearchAnchor(
               builder: (BuildContext context, SearchController controller){ 
                 return SearchBar(
+                  elevation: WidgetStatePropertyAll<double>(0.0),
+                 backgroundColor: WidgetStateProperty.all(colorPokeball),
                   controller: controller,
+                  hintText: "Pesquise o Pokemon",
                   padding: WidgetStatePropertyAll(
                     EdgeInsets.symmetric(horizontal: 16.0),
                     ),
@@ -83,7 +90,9 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.only(top: 10, left: 35, right: 35),
                   children: [
                     MyButtonWidget(
-                      onTap: () {},
+                      onTap: () {
+                        print("asd");
+                      },
                       text: 'Pokedex',
                       textColor: Colors.white,
                       backgroundColor: colorButtomPokemon,
@@ -132,6 +141,7 @@ class _HomePageState extends State<HomePage> {
           )
         ],
             ),
+            
             Positioned(
               top: -215,
               left: 110,
@@ -140,6 +150,22 @@ class _HomePageState extends State<HomePage> {
                 width: 600,
                 height: 600,
                 color: colorPokeball,
+              ),
+            ),
+            Positioned(
+              child: Padding(
+                padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height*0.150, 
+                bottom: 100,
+                left: 35),
+                child: Text(
+                  "Que Pokémon você está procurando?",
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.black, 
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ],
