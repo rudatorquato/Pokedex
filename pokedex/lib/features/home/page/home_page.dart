@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pokedex/core/theme/colors.dart';
 import 'package:pokedex/core/widget/my_button.widget.dart';
+import 'package:pokedex/features/pokemons/store/pokemon.store.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final pokemonStore = GetIt.I.get<PokemonStore>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,18 +68,47 @@ class _HomePageState extends State<HomePage> {
                     leading: const Icon(Icons.search),
                 );
               }, 
-              suggestionsBuilder: (BuildContext context, SearchController controller) {
-                  return List<ListTile>.generate(5, (int index) {
-                    final String item = 'item $index';
-                    return ListTile(
-                      title: Text(item),
-                      onTap: () {
-                        setState(() {
-                          controller.closeView(item);
-                        });
-                      },
-                    );
-                  });
+             suggestionsBuilder: (BuildContext context, SearchController controller) {
+  return [
+    Observer(
+      builder: (_) {
+        if (pokemonStore.isLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else if (pokemonStore.errorMessage.isNotEmpty) {
+          return Center(child: Text(pokemonStore.errorMessage));
+        } else {
+          return SizedBox(
+            height: MediaQuery.of(context).size.height, 
+            child: ListView.builder(
+              itemCount: pokemonStore.pokemons?.length ?? 0,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(pokemonStore.pokemons?[index].name ?? ''),
+                  onTap: () {
+                         setState(() {
+                          controller.closeView(pokemonStore.pokemons?[index].name);
+                         });
+                       },
+                );
+              },
+            ),
+          );
+        }
+      },
+    ),
+  ];
+
+                  // List<ListTile>.generate(5, (int index) {
+                  //   final String item = 'item $index';
+                  //   return ListTile(
+                  //     title: Text(item),
+                  //     onTap: () {
+                  //       setState(() {
+                  //         controller.closeView(item);
+                  //       });
+                  //     },
+                  //   );
+                  // });
                 },
                 ),
             ),
