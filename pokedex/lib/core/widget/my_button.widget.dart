@@ -49,7 +49,7 @@ class _MyButtonWidgetState extends State<MyButtonWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0,top: 20),
+                  padding: const EdgeInsets.only(left: 15.0,top: 13),
                   child: widget.isLoading
                       ? CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(Colors.white),

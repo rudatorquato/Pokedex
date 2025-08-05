@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
-import 'package:pokedex/core/theme/colors.dart';
-import 'package:pokedex/core/widget/my_button.widget.dart';
-import 'package:pokedex/features/pokemons/store/pokemon.store.dart';
+import 'package:pokedex/core/theme/colors.dart';  
+import 'package:pokedex/features/home/widgets/options_features_widget.dart';
+import 'package:pokedex/features/home/widgets/search_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,197 +11,70 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final pokemonStore = GetIt.I.get<PokemonStore>();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ClipRRect(
-        child: Stack(
-          children: [
-            Container(
+  body: Stack(
+    children: [
+      Container(
         decoration: BoxDecoration(
-          color: background,
+          color: primarycolor,
         ),
-        height: MediaQuery.of(context).size.height,
-            ),
-            Column(
+      ),
+      Positioned(
+        top: -215,
+        left: MediaQuery.of(context).size.width*0.150,
+        child: Image.asset(
+          'assets/images/pkeball.png',
+          width: 600,
+          height: 600,
+          color: colorPokeball,
+        ),
+      ),
+      Column(
         children: [
+          Container(
+            height: 250, // altura da parte branca
+          ),
           Expanded(
             child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25), 
-            bottomRight: Radius.circular(25)
-          )
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height*0.150, 
-                bottom: 100,
-                ),
-                
-              ),
-           
-            Padding(
-              padding: EdgeInsets.only( left: 35, right: 35),
-              child: SearchAnchor(
-              builder: (BuildContext context, SearchController controller){ 
-                return SearchBar(
-                  elevation: WidgetStatePropertyAll<double>(0.0),
-                 backgroundColor: WidgetStateProperty.all(colorPokeball),
-                  controller: controller,
-                  hintText: "Pesquise o Pokemon",
-                  padding: WidgetStatePropertyAll(
-                    EdgeInsets.symmetric(horizontal: 16.0),
-                    ),
-                    onTap: () {
-                      controller.openView();
-                    },
-                    onChanged: (_) {
-                      controller.openView();
-                    },
-                    leading: const Icon(Icons.search),
-                );
-              }, 
-             suggestionsBuilder: (BuildContext context, SearchController controller) {
-  return [
-    Observer(
-      builder: (_) {
-        if (pokemonStore.isLoading) {
-          return Center(child: CircularProgressIndicator());
-        } else if (pokemonStore.errorMessage.isNotEmpty) {
-          return Center(child: Text(pokemonStore.errorMessage));
-        } else {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height, 
-            child: ListView.builder(
-              itemCount: pokemonStore.pokemons?.length ?? 0,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(pokemonStore.pokemons?[index].name ?? ''),
-                  onTap: () {
-                         setState(() {
-                          controller.closeView(pokemonStore.pokemons?[index].name);
-                         });
-                       },
-                );
-              },
-            ),
-          );
-        }
-      },
-    ),
-  ];
-
-                  // List<ListTile>.generate(5, (int index) {
-                  //   final String item = 'item $index';
-                  //   return ListTile(
-                  //     title: Text(item),
-                  //     onTap: () {
-                  //       setState(() {
-                  //         controller.closeView(item);
-                  //       });
-                  //     },
-                  //   );
-                  // });
-                },
-                ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: 3,
-                  mainAxisSpacing: 16, // espaçamento entre linhas
-                  crossAxisSpacing: 16,
-                  padding: EdgeInsets.only(top: 10, left: 35, right: 35),
-                  children: [
-                    MyButtonWidget(
-                      onTap: () {
-                        print("asd");
-                      },
-                      text: 'Pokedex',
-                      textColor: Colors.white,
-                      backgroundColor: colorButtomPokemon,
-                    ),
-                    MyButtonWidget(
-                      onTap: () {},
-                      text: 'Movimentos',
-                      textColor: Colors.white,
-                      backgroundColor: colorButtomMoves,
-                    ),
-                    MyButtonWidget(
-                      onTap: () {},
-                      text: 'Habilidades',
-                      textColor: Colors.white,
-                      backgroundColor: colorButtomAbilities,
-                    ),
-                    MyButtonWidget(
-                      onTap: () {},
-                      text: 'Frutas',
-                      textColor: Colors.white,
-                      backgroundColor: colorButtomBerry,
-                    ),
-                    MyButtonWidget(
-                      onTap: () {},
-                      text: 'Localização',
-                      textColor: Colors.white,
-                      backgroundColor: colorButtomLocate,
-                    ),
-                    MyButtonWidget(
-                      onTap: () {},
-                      text: 'Tipos',
-                      textColor: Colors.white,
-                      backgroundColor: colorButtomType,
-                    ),
-                  ],
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
                 ),
               ),
-            ),
-          ],
-        ),
-          ),
-        ),
-        
-          Container(
-            height: 300,
-          )
-        ],
-            ),
-            
-            Positioned(
-              top: -215,
-              left: 110,
-              child: Image.asset(
-                'assets/images/pkeball.png',// substitua por sua imagem
-                width: 600,
-                height: 600,
-                color: colorPokeball,
-              ),
-            ),
-            Positioned(
-              child: Padding(
-                padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height*0.150, 
-                bottom: 100,
-                left: 35),
-                child: Text(
-                  "Que Pokémon você está procurando?",
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.black, 
-                    fontWeight: FontWeight.bold,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 20, left: 35, right: 35),
+                    child: Text(
+                      "Que Pokémon você está procurando?",
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 35, right: 35),
+                    child: SearchWidget(),
+                  ),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: OptionsFeaturesWidget(),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      )
-    );
+          ),
+        ],
+      ),
+    ],
+  ),
+);
   }
 }
