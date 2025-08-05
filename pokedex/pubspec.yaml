@@ -66,6 +66,15 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/pkeball.png
+    - assets/images/gen/gen1.png
+    - assets/images/gen/gen2.png
+    - assets/images/gen/gen3.png
+    - assets/images/gen/gen4.png
+    - assets/images/gen/gen5.png
+    - assets/images/gen/gen6.png
+    - assets/images/gen/gen7.png
+    - assets/images/gen/gen8.png
+    - assets/images/gen/gen9.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
