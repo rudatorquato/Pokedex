@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/core/theme/colors.dart';
 import 'package:pokedex/core/widget/my_button.widget.dart';
+import 'package:pokedex/features/pokemons/pages/gen_pokemon_list_page.dart';
+import 'package:pokedex/utils/utils.dart';
 
 class OptionsFeaturesWidget extends StatefulWidget {
   const OptionsFeaturesWidget({super.key});
@@ -21,7 +23,7 @@ class _OptionsFeaturesWidgetState extends State<OptionsFeaturesWidget> {
       children: [
         MyButtonWidget(
           onTap: () {
-            print("asd");
+            to(context, GenPokemonListPage());
           },
           text: 'Pokedex',
           textColor: Colors.white,
