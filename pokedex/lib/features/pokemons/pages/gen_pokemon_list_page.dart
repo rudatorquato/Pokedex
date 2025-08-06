@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/core/theme/colors.dart';
+import 'package:pokedex/features/home/page/home_page.dart';
 import 'package:pokedex/features/pokemons/widget/gen_pokemon_widget.dart';
+import 'package:pokedex/utils/utils.dart';
 
 class GenPokemonListPage extends StatefulWidget {
   const GenPokemonListPage({super.key});
@@ -21,6 +23,19 @@ class _GenPokemonListPageState extends State<GenPokemonListPage> {
           color: primarycolor,
         ),
       ),
+      Positioned(
+        top:  MediaQuery.of(context).size.height*0.07,
+        child: 
+        IconButton(
+           icon: const Icon(
+            Icons.arrow_back_ios_new, 
+            color: Colors.white,
+            size: 45,
+            ),
+           iconSize: 45,
+           onPressed: () => back(context, HomePage(),'Dados de volta para a tela anterior'),
+           ),
+          ),
       Positioned(
         top: -215,
         left: MediaQuery.of(context).size.width*0.150,
