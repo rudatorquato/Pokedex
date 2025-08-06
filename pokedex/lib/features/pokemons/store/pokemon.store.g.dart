@@ -17,6 +17,14 @@ mixin _$PokemonStore on _PokemonStore, Store {
         () => super.pokemons,
         name: '_PokemonStore.pokemons',
       )).value;
+  Computed<List<PokemonGen>?>? _$pokemonsDetailComputed;
+
+  @override
+  List<PokemonGen>? get pokemonsDetail =>
+      (_$pokemonsDetailComputed ??= Computed<List<PokemonGen>?>(
+        () => super.pokemonsDetail,
+        name: '_PokemonStore.pokemonsDetail',
+      )).value;
 
   late final _$pokemonModelAtom = Atom(
     name: '_PokemonStore.pokemonModel',
@@ -72,6 +80,24 @@ mixin _$PokemonStore on _PokemonStore, Store {
     });
   }
 
+  late final _$pokemonDetailModelAtom = Atom(
+    name: '_PokemonStore.pokemonDetailModel',
+    context: context,
+  );
+
+  @override
+  PokemonGenModel? get pokemonDetailModel {
+    _$pokemonDetailModelAtom.reportRead();
+    return super.pokemonDetailModel;
+  }
+
+  @override
+  set pokemonDetailModel(PokemonGenModel? value) {
+    _$pokemonDetailModelAtom.reportWrite(value, super.pokemonDetailModel, () {
+      super.pokemonDetailModel = value;
+    });
+  }
+
   late final _$getPokemonsAsyncAction = AsyncAction(
     '_PokemonStore.getPokemons',
     context: context,
@@ -82,13 +108,27 @@ mixin _$PokemonStore on _PokemonStore, Store {
     return _$getPokemonsAsyncAction.run(() => super.getPokemons());
   }
 
+  late final _$getPokemonsGenerationsAsyncAction = AsyncAction(
+    '_PokemonStore.getPokemonsGenerations',
+    context: context,
+  );
+
+  @override
+  Future<void> getPokemonsGenerations(String gen) {
+    return _$getPokemonsGenerationsAsyncAction.run(
+      () => super.getPokemonsGenerations(gen),
+    );
+  }
+
   @override
   String toString() {
     return '''
 pokemonModel: ${pokemonModel},
 isLoading: ${isLoading},
 errorMessage: ${errorMessage},
-pokemons: ${pokemons}
+pokemonDetailModel: ${pokemonDetailModel},
+pokemons: ${pokemons},
+pokemonsDetail: ${pokemonsDetail}
     ''';
   }
 }

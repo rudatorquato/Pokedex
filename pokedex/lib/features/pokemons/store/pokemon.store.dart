@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
+import 'package:pokedex/features/pokemons/model/pokemon_gen_model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_model.dart';
 import '../repository/pokemon_repository.dart';
 
@@ -42,4 +43,30 @@ abstract class _PokemonStore with Store {
       isLoading = false;
     }
   }
+
+  @observable
+  PokemonGenModel? pokemonDetailModel;
+
+  @computed
+  List<PokemonGen>? get pokemonsDetail => pokemonDetailModel?.pokemons;
+
+  @action
+  Future<void> getPokemonsGenerations(String gen) async {
+    isLoading = true;
+    try {
+      final pokemonDetailModelResponse = await _pokemonRepository.getPokemonsGen(gen);
+      if (pokemonDetailModelResponse != null) {
+        pokemonDetailModel = pokemonDetailModelResponse;
+      } else {
+        errorMessage = 'Resposta nula';
+      }
+    } on DioException catch (e) {
+      errorMessage = 'Erro de rede: ${e.message}';
+    } catch (e) {
+      errorMessage = 'Erro desconhecido: $e';
+    } finally {
+      isLoading = false;
+    }
+  }
 }
+

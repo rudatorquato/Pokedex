@@ -8,7 +8,7 @@ Future<void> main() async {
   setupServiceLocator();
 
   final pokemonStore = GetIt.I.get<PokemonStore>();
-  await pokemonStore.getPokemons();
+  await pokemonStore.getPokemonsGenerations("1");
   runApp( MyApp());
 }
 
@@ -21,15 +21,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage()
-      // MyHomePage(title: 'Flutter Demo Home Page'),
+      home: HomePage()
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key,});
+  
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -43,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+       
       ),
       body: Observer(
         builder: (_) {
@@ -53,10 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
             return Center(child: Text(pokemonStore.errorMessage));
           } else {
             return ListView.builder(
-              itemCount: pokemonStore.pokemons?.length ?? 0,
+              itemCount: pokemonStore.pokemonsDetail?.length ?? 0,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(pokemonStore.pokemons?[index].name ?? ''),
+                  title: Text(pokemonStore.pokemonsDetail?[index].name ?? ''),
                 );
               },
             );
