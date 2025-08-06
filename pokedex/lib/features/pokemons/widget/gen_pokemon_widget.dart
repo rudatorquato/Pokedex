@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/core/theme/colors.dart';
 
 class GenPokemonWidget extends StatefulWidget {
   const GenPokemonWidget({super.key});
@@ -11,15 +12,33 @@ class _GenPokemonWidgetState extends State<GenPokemonWidget> {
   Widget _buildButton(String text) {
     return ElevatedButton(
       onPressed: () {
-        // ação ao pressionar o botão
+       
       },
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero, // torna o botão retangular
+          borderRadius: BorderRadius.circular(25),
         ),
-        fixedSize: Size(150, 100), // tamanho fixo
+        fixedSize: Size(150, 100), 
       ),
-      child: Text(text),
+
+      child: Column(
+        children: [
+          Image.asset(
+              'assets/images/gen/gen$text.png',
+              height: 75,
+              
+            ),
+            Text(
+              'Geração $text',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+        ],
+      ),
+        
     );
   }
 
@@ -30,14 +49,17 @@ class _GenPokemonWidgetState extends State<GenPokemonWidget> {
       child: ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) {
+          int x;
+          x=index+1;
           return Padding(
             padding: EdgeInsets.only(bottom: index < 4 ? 20 : 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildButton('Clique aqui'),
+                
+                _buildButton((index+1).toString()),
                 SizedBox(width: 50), // espaçamento entre os botões
-                index == 4 ? Container(width: 150) : _buildButton('Clique aqui'),
+                index == 4 ? Container(width: 150) : _buildButton((index < x ? 6+index : index ).toString()),
               ],
             ),
           );
