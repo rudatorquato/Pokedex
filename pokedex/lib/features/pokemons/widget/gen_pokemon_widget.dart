@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/core/theme/colors.dart';
 
 class GenPokemonWidget extends StatefulWidget {
   const GenPokemonWidget({super.key});
