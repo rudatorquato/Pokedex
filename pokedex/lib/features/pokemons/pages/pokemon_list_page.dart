@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:pokedex/core/theme/colors.dart';
 import 'package:pokedex/features/home/page/home_page.dart';
+import 'package:pokedex/features/pokemons/pages/gen_pokemon_list_page.dart';
 import 'package:pokedex/features/pokemons/store/pokemon.store.dart';
 import 'package:pokedex/utils/utils.dart';
 
@@ -61,7 +62,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
                 size: 45,
               ),
               iconSize: 45,
-              onPressed: () => back(context, HomePage(), 'Dados de volta para a tela anterior'),
+              onPressed: () => back(context, GenPokemonListPage(), 'Dados de volta para a tela anterior'),
             ),
           ),
           Positioned(
@@ -116,43 +117,69 @@ class _PokemonListPageState extends State<PokemonListPage> {
                                   String pokemonUrl = pokemonStore.pokemonsGen?[index].url ?? '';
                                   String pokemonId =getIdUrlPokemon(pokemonUrl);
                                   return ListTile(
-                                    title: InkWell(
-                                      onTap: () {
-                                        print('Botão pressionado');
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: 100,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withValues(alpha: 0.2),
-                                              spreadRadius: 1,
-                                              blurRadius: 2,
-                                              offset: Offset(0, 1),
+                                    title: 
+                                    Container(
+                                      width: double.infinity,
+                                      height: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withValues(alpha: 0.2),
+                                            spreadRadius: 1,
+                                            blurRadius: 2,
+                                            offset: Offset(0, 1),
+                                          ),
+                                        ],
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20.0),
+                                        child: Material(
+                                          color: primarycolor,
+                                          child: InkWell(
+                                            onTap: () {
+                                              print("APEWRTEI");
+                                            },
+                                            child: Stack(
+                                              children: [
+                                                Positioned(
+                                                  right: -75,
+                                              top: -20,
+                                              bottom: -20,
+                                                  child: Image.asset(
+                                                    'assets/images/pkeball.png',
+                                                    color: translucentWhite,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(left: 10.0, top: 12.0),
+                                                  child: Row(
+                                                  children: [
+                                                    pokemonId != 0
+                                                    ? 
+                                                    Image.asset("assets/images/official-artwork/$pokemonId.png",
+                                                    width: 80,
+                                                    height: 80,
+                                                    )
+                                                    : CircularProgressIndicator(),
+                                                    SizedBox(width: 10),
+                                                    Text(updateNamePokemon(pokemonName)
+                                                      ,
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.white
+                                                      ),
+                                                    ),
+                                                  ],
+                                                                                                ),
+                                                ),
+                                              ],
+                                            
                                             ),
-                                          ],
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            pokemonId != 0
-                                            ? 
-                                            Image.asset("assets/images/official-artwork/$pokemonId.png",
-                                            width: 80,
-                                            height: 80,
-                                            )
-                                            : CircularProgressIndicator(),
-                                            SizedBox(width: 10),
-                                            Text(updateNamePokemon(pokemonName)
-                                              ,
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                     ),
