@@ -1,4 +1,5 @@
 import 'package:pokedex/api/services/api_info/pokemons/pokemon.service.dart';
+import 'package:pokedex/features/pokemons/model/pokemon_detail-model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_gen_model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_model.dart';
 
@@ -21,5 +22,13 @@ class PokemonRepository {
       throw Exception('Erro ao carregar pokémons: ${response.statusMessage}');
     }
     return PokemonGenModel.fromJson(response.data);
+  }
+
+  Future<PokemonInformationModel> getPokemonDetail(String namePokemon) async {
+    final response = await _pokemonService.pokemonDetail(namePokemon);
+    if (response.statusCode != 200) {
+      throw Exception('Erro ao carregar pokémons: ${response.statusMessage}');
+    }
+    return PokemonInformationModel.fromJson(response.data);
   }
 }

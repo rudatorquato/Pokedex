@@ -17,13 +17,29 @@ mixin _$PokemonStore on _PokemonStore, Store {
         () => super.pokemons,
         name: '_PokemonStore.pokemons',
       )).value;
-  Computed<List<PokemonGen>?>? _$pokemonsDetailComputed;
+  Computed<List<PokemonGen>?>? _$pokemonsGenComputed;
 
   @override
-  List<PokemonGen>? get pokemonsDetail =>
-      (_$pokemonsDetailComputed ??= Computed<List<PokemonGen>?>(
-        () => super.pokemonsDetail,
-        name: '_PokemonStore.pokemonsDetail',
+  List<PokemonGen>? get pokemonsGen =>
+      (_$pokemonsGenComputed ??= Computed<List<PokemonGen>?>(
+        () => super.pokemonsGen,
+        name: '_PokemonStore.pokemonsGen',
+      )).value;
+  Computed<PokemonImage?>? _$pokemonImageComputed;
+
+  @override
+  PokemonImage? get pokemonImage =>
+      (_$pokemonImageComputed ??= Computed<PokemonImage?>(
+        () => super.pokemonImage,
+        name: '_PokemonStore.pokemonImage',
+      )).value;
+  Computed<PokemonBasicInformation?>? _$pokemonBasicInformationComputed;
+
+  @override
+  PokemonBasicInformation? get pokemonBasicInformation =>
+      (_$pokemonBasicInformationComputed ??= Computed<PokemonBasicInformation?>(
+        () => super.pokemonBasicInformation,
+        name: '_PokemonStore.pokemonBasicInformation',
       )).value;
 
   late final _$pokemonModelAtom = Atom(
@@ -80,22 +96,44 @@ mixin _$PokemonStore on _PokemonStore, Store {
     });
   }
 
-  late final _$pokemonDetailModelAtom = Atom(
-    name: '_PokemonStore.pokemonDetailModel',
+  late final _$pokemonGenModelAtom = Atom(
+    name: '_PokemonStore.pokemonGenModel',
     context: context,
   );
 
   @override
-  PokemonGenModel? get pokemonDetailModel {
-    _$pokemonDetailModelAtom.reportRead();
-    return super.pokemonDetailModel;
+  PokemonGenModel? get pokemonGenModel {
+    _$pokemonGenModelAtom.reportRead();
+    return super.pokemonGenModel;
   }
 
   @override
-  set pokemonDetailModel(PokemonGenModel? value) {
-    _$pokemonDetailModelAtom.reportWrite(value, super.pokemonDetailModel, () {
-      super.pokemonDetailModel = value;
+  set pokemonGenModel(PokemonGenModel? value) {
+    _$pokemonGenModelAtom.reportWrite(value, super.pokemonGenModel, () {
+      super.pokemonGenModel = value;
     });
+  }
+
+  late final _$pokemonInformationModelAtom = Atom(
+    name: '_PokemonStore.pokemonInformationModel',
+    context: context,
+  );
+
+  @override
+  PokemonInformationModel? get pokemonInformationModel {
+    _$pokemonInformationModelAtom.reportRead();
+    return super.pokemonInformationModel;
+  }
+
+  @override
+  set pokemonInformationModel(PokemonInformationModel? value) {
+    _$pokemonInformationModelAtom.reportWrite(
+      value,
+      super.pokemonInformationModel,
+      () {
+        super.pokemonInformationModel = value;
+      },
+    );
   }
 
   late final _$getPokemonsAsyncAction = AsyncAction(
@@ -120,15 +158,30 @@ mixin _$PokemonStore on _PokemonStore, Store {
     );
   }
 
+  late final _$getPokemonInformationAsyncAction = AsyncAction(
+    '_PokemonStore.getPokemonInformation',
+    context: context,
+  );
+
+  @override
+  Future<void> getPokemonInformation(String pokemonName) {
+    return _$getPokemonInformationAsyncAction.run(
+      () => super.getPokemonInformation(pokemonName),
+    );
+  }
+
   @override
   String toString() {
     return '''
 pokemonModel: ${pokemonModel},
 isLoading: ${isLoading},
 errorMessage: ${errorMessage},
-pokemonDetailModel: ${pokemonDetailModel},
+pokemonGenModel: ${pokemonGenModel},
+pokemonInformationModel: ${pokemonInformationModel},
 pokemons: ${pokemons},
-pokemonsDetail: ${pokemonsDetail}
+pokemonsGen: ${pokemonsGen},
+pokemonImage: ${pokemonImage},
+pokemonBasicInformation: ${pokemonBasicInformation}
     ''';
   }
 }

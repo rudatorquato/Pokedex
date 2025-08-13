@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/features/pokemons/pages/pokemon_list_page.dart';
+import 'package:pokedex/utils/utils.dart';
 
 class GenPokemonWidget extends StatefulWidget {
   const GenPokemonWidget({super.key});
@@ -11,7 +13,7 @@ class _GenPokemonWidgetState extends State<GenPokemonWidget> {
   Widget _buildButton(String text) {
     return ElevatedButton(
       onPressed: () {
-       
+       to(context, PokemonListPage( numberGeneration: text.toString(),));
       },
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
