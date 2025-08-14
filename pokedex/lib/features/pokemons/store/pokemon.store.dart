@@ -3,6 +3,7 @@ import 'package:mobx/mobx.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_detail-model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_gen_model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_model.dart';
+import 'package:pokedex/utils/utils.dart';
 import '../repository/pokemon_repository.dart';
 
 part 'pokemon.store.g.dart';
@@ -49,7 +50,9 @@ abstract class _PokemonStore with Store {
   PokemonGenModel? pokemonGenModel;
 
   @computed
-  List<PokemonGen>? get pokemonsGen => pokemonGenModel?.pokemons;
+List<PokemonGen>? get pokemonsGen => pokemonGenModel?.pokemons!.map((e) => e)
+    .toList()
+    ?..sort((a, b) => int.parse(getIdUrlPokemon(a.url!)).compareTo(int.parse(getIdUrlPokemon(b.url!))));
 
   @action
   Future<void> getPokemonsGenerations(String gen) async {
