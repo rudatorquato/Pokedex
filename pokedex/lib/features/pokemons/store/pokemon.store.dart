@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mobx/mobx.dart';
-import 'package:pokedex/features/pokemons/model/pokemon_detail-model.dart';
+import 'package:pokedex/features/pokemons/model/pokemon_detail_model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_gen_model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_model.dart';
 import 'package:pokedex/utils/utils.dart';

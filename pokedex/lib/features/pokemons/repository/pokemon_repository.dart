@@ -1,5 +1,5 @@
 import 'package:pokedex/api/services/api_info/pokemons/pokemon.service.dart';
-import 'package:pokedex/features/pokemons/model/pokemon_detail-model.dart';
+import 'package:pokedex/features/pokemons/model/pokemon_detail_model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_gen_model.dart';
 import 'package:pokedex/features/pokemons/model/pokemon_model.dart';
 

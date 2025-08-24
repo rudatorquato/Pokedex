@@ -1,26 +1,20 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'pokemon_gen_model.g.dart';
+
+@JsonSerializable()
 class PokemonGenModel {
+  @JsonKey(name: 'pokemon_species')
 
   List<PokemonGen>? pokemons;
 
   PokemonGenModel({this.pokemons});
 
-  PokemonGenModel.fromJson(Map<String, dynamic> json) {
-    pokemons = json['pokemon_species'] != null
-        ? (json['pokemon_species'] as List)
-            .map((json) => PokemonGen.fromJson(json))
-            .toList()
-        : null;
-  }
+  factory PokemonGenModel.fromJson(Map<String, dynamic> json) => _$PokemonGenModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (pokemons != null) {
-      data['pokemon_species'] = pokemons!.map((pokemon) => pokemon.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$PokemonGenModelToJson(this);
 }
-
+@JsonSerializable()
 class PokemonGen {
   String? name;
   String? url;
@@ -30,15 +24,7 @@ class PokemonGen {
     this.url
     });
 
-  PokemonGen.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    url = json['url'];
-  }
+  factory PokemonGen.fromJson(Map<String, dynamic> json) => _$PokemonGenFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['url'] = url;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$PokemonGenToJson(this);
 }
