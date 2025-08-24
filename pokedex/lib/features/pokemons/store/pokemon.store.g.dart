@@ -41,6 +41,14 @@ mixin _$PokemonStore on _PokemonStore, Store {
         () => super.pokemonBasicInformation,
         name: '_PokemonStore.pokemonBasicInformation',
       )).value;
+  Computed<List<Pokemon>?>? _$currentPokemonsComputed;
+
+  @override
+  List<Pokemon>? get currentPokemons =>
+      (_$currentPokemonsComputed ??= Computed<List<Pokemon>?>(
+        () => super.currentPokemons,
+        name: '_PokemonStore.currentPokemons',
+      )).value;
 
   late final _$pokemonModelAtom = Atom(
     name: '_PokemonStore.pokemonModel',
@@ -136,6 +144,24 @@ mixin _$PokemonStore on _PokemonStore, Store {
     );
   }
 
+  late final _$filteredPokemonsAtom = Atom(
+    name: '_PokemonStore.filteredPokemons',
+    context: context,
+  );
+
+  @override
+  List<Pokemon>? get filteredPokemons {
+    _$filteredPokemonsAtom.reportRead();
+    return super.filteredPokemons;
+  }
+
+  @override
+  set filteredPokemons(List<Pokemon>? value) {
+    _$filteredPokemonsAtom.reportWrite(value, super.filteredPokemons, () {
+      super.filteredPokemons = value;
+    });
+  }
+
   late final _$getPokemonsAsyncAction = AsyncAction(
     '_PokemonStore.getPokemons',
     context: context,
@@ -170,6 +196,23 @@ mixin _$PokemonStore on _PokemonStore, Store {
     );
   }
 
+  late final _$_PokemonStoreActionController = ActionController(
+    name: '_PokemonStore',
+    context: context,
+  );
+
+  @override
+  void filterPokemons(String query) {
+    final _$actionInfo = _$_PokemonStoreActionController.startAction(
+      name: '_PokemonStore.filterPokemons',
+    );
+    try {
+      return super.filterPokemons(query);
+    } finally {
+      _$_PokemonStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
@@ -178,10 +221,12 @@ isLoading: ${isLoading},
 errorMessage: ${errorMessage},
 pokemonGenModel: ${pokemonGenModel},
 pokemonInformationModel: ${pokemonInformationModel},
+filteredPokemons: ${filteredPokemons},
 pokemons: ${pokemons},
 pokemonsGen: ${pokemonsGen},
 pokemonImage: ${pokemonImage},
-pokemonBasicInformation: ${pokemonBasicInformation}
+pokemonBasicInformation: ${pokemonBasicInformation},
+currentPokemons: ${currentPokemons}
     ''';
   }
 }

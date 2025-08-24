@@ -34,6 +34,7 @@ abstract class _PokemonStore with Store {
       final pokemonModelResponse = await _pokemonRepository.getPokemons();
       if (pokemonModelResponse != null) {
         pokemonModel = pokemonModelResponse;
+        filteredPokemons = pokemons; // Inicialize filteredPokemons aqui
       } else {
         errorMessage = 'Resposta nula';
       }
@@ -98,6 +99,23 @@ List<PokemonGen>? get pokemonsGen => pokemonGenModel?.pokemons!.map((e) => e)
       errorMessage = 'Erro desconhecido: $e';
     } finally {
       isLoading = false;
+    }
+  }
+
+  @computed
+  List<Pokemon>? get currentPokemons => filteredPokemons ?? pokemons;
+
+  @observable
+  List<Pokemon>? filteredPokemons;
+
+  @action
+  void filterPokemons(String query) {
+    if (query.isEmpty) {
+      filteredPokemons = pokemons;
+    } else {
+      filteredPokemons = pokemons
+          ?.where((pokemon) => pokemon.name!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
     }
   }
 }

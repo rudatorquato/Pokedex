@@ -15,6 +15,12 @@ class _SearchWidgetState extends State<SearchWidget> {
   final pokemonStore = GetIt.I.get<PokemonStore>();
 
   @override
+  void initState() {
+    super.initState();
+    pokemonStore.getPokemons();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SearchAnchor(
       builder: (BuildContext context, SearchController controller) {
@@ -29,34 +35,36 @@ class _SearchWidgetState extends State<SearchWidget> {
           onTap: () {
             controller.openView();
           },
-          onChanged: (_) {
-            controller.openView();
+          onChanged: (text) {
+            pokemonStore.filterPokemons(text);
           },
           leading: const Icon(Icons.search),
         );
       },
       suggestionsBuilder: (BuildContext context, SearchController controller) {
+        pokemonStore.filterPokemons(controller.text);
         return [
           Observer(
             builder: (_) {
+              final pokemons = pokemonStore.currentPokemons;
               if (pokemonStore.isLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (pokemonStore.errorMessage.isNotEmpty) {
                 return Center(child: Text(pokemonStore.errorMessage));
+              } else if (pokemons?.isEmpty ?? true) {
+                return Center(child: Text('Nenhum pokémon encontrado'));
               } else {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                    itemCount: pokemonStore.pokemons?.length ?? 0,
+                    itemCount: pokemons?.length ?? 0,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text(pokemonStore.pokemons?[index].name ?? ''),
+                        title: Text(pokemons?[index].name ?? ''),
                         onTap: () {
-                          setState(() {
-                            controller.closeView(
-                              pokemonStore.pokemons?[index].name,
-                            );
-                          });
+                          controller.closeView(
+                            pokemons?[index].name,
+                          );
                         },
                       );
                     },
