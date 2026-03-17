@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/core/theme/colors.dart';
+
 class MyButtonWidget extends StatefulWidget {
   final String text;
   final VoidCallback? onTap;
@@ -40,8 +41,8 @@ class _MyButtonWidgetState extends State<MyButtonWidget> {
               children: [
                 Positioned(
                   right: -75,
-              top: -20,
-              bottom: -20,
+                  top: -20,
+                  bottom: -20,
                   child: Image.asset(
                     'assets/images/pkeball.png',
                     color: translucentWhite,
@@ -49,7 +50,7 @@ class _MyButtonWidgetState extends State<MyButtonWidget> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15.0,top: 13),
+                  padding: const EdgeInsets.only(left: 15.0, top: 13),
                   child: widget.isLoading
                       ? CircularProgressIndicator(
                           valueColor: AlwaysStoppedAnimation(Colors.white),
@@ -57,7 +58,9 @@ class _MyButtonWidgetState extends State<MyButtonWidget> {
                       : Text(
                           widget.text,
                           textAlign: TextAlign.start,
-                          style: TextStyle(color: widget.textColor ?? Colors.white),
+                          style: TextStyle(
+                            color: widget.textColor ?? Colors.white,
+                          ),
                         ),
                 ),
               ],

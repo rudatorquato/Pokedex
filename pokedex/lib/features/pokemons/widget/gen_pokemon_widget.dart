@@ -57,10 +57,8 @@ class _GenPokemonWidgetState extends State<GenPokemonWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                
                 _buildButton((index+1).toString()),
-                SizedBox(width: 50), // espaçamento entre os botões
-                index == 4 ? Container(width: 150) : _buildButton((index < x ? 6+index : index ).toString()),
+                index == 4 ? const SizedBox(width: 150) : _buildButton((index < x ? 6+index : index ).toString()),
               ],
             ),
           );
